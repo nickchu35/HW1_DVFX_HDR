@@ -1,0 +1,28 @@
+function shift = align(im1,im2)
+% transform to grayscale imgs
+img_gray1 = rgb2gray(im1);
+img_gray2 = rgb2gray(im2);
+% transform matrix to vector, and get the median of both imgs
+th1 = median(img_gray1(:));
+th2 = median(img_gray2(:));
+
+
+
+for i = 1 : size(imIMG1,1) 
+    for j = 1 : size(grayIMG1,2)
+        if grayIMG1( i, j) < th1
+           mtbIMG1( i, j) = 0; 
+        elseif grayIMG1( i, j) >= th1
+           mtbIMG1( i, j) = 1;
+        end
+        if grayIMG2( i, j) < th2
+           mtbIMG2( i, j) = 0; 
+        elseif grayIMG2( i, j) >= th2
+           mtbIMG2( i, j) = 1;   
+        end
+    end
+end
+
+
+
+end
