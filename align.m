@@ -23,7 +23,7 @@ for i = 1 : size(img_gray1,1)
         end
     end
 end
-
+% 
 
 
 end
