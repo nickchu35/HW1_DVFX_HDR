@@ -1,1 +1,5 @@
-This is the project of Nick and Bun's digiVFX HW1 - HDR image. 
+This is the project of Nick and Bun's digiVFX HW1 - HDR image.
+1. Image alignment.
+2. Recover response curve.
+3. Reconstruct radiance map.
+
