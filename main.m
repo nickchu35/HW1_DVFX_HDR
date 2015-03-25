@@ -19,14 +19,7 @@
  img6 = imread('HDR_Photos/img1_6.JPG'); 
  img7 = imread('HDR_Photos/img1_7.JPG');
  img8 = imread('HDR_Photos/img1_8.JPG');
- img1_gray = rgb2gray(img1);
- img2_gray = rgb2gray(img2);
- img3_gray = rgb2gray(img3);
- img4_gray = rgb2gray(img4);
- img5_gray = rgb2gray(img5);
- img6_gray = rgb2gray(img6);
- img7_gray = rgb2gray(img7);
- img8_gray = rgb2gray(img8);
+
 
  
 
