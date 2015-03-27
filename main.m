@@ -1,4 +1,6 @@
  % main file of the project
+ clear;
+ clc;
  %% originally want to downsample first from 6000 x 4000 to 1500 x 1000 (1/4), but mind has changed
 %  path = 'HDR_Photos/img2_';
 %  sub = '.JPG';
@@ -10,7 +12,7 @@
 %      fs = [path int2str(i) small_s sub];
 %      imwrite(smallim, fs);
 %  end
- %% Read l photos and transform to gray images
+ %% Read in photos
  img1 = imread('HDR_Photos/img1_1.JPG'); 
  img2 = imread('HDR_Photos/img1_2.JPG');
  img3 = imread('HDR_Photos/img1_3.JPG'); 
