@@ -1,5 +1,4 @@
 function shift = align(im1,im2)
-disp('Start Alignment');
 img_gray1 = rgb2gray(im1);
 img_gray2 = rgb2gray(im2);
 % transform matrix to vector, and get the median of both imgs
@@ -32,11 +31,11 @@ end
 error = zeros(3,3); % keep changing
 shift = zeros(1,2); % x and y shift
 for downsample_iteration = 1:5
-   disp('iteration '); disp(downsample_iteration);
-   refDown = imresize(mtb1,2^(downsample_iteration-6)); % downsample the reference mtb
-   testDown = imresize(mtb2,2^(downsample_iteration-6)); % downsample the test mtb
-   exclusionRef = imresize(img_gray1,2^(downsample_iteration-6));
-   exclusionTest = imresize(img_gray2,2^(downsample_iteration-6));
+   disp('iteration: '); disp(downsample_iteration);
+   refDown = imresize(mtb1,2^(downsample_iteration - 5)); % downsample the reference mtb
+   testDown = imresize(mtb2,2^(downsample_iteration - 5)); % downsample the test mtb
+   exclusionRef = imresize(img_gray1,2^(downsample_iteration - 5));
+   exclusionTest = imresize(img_gray2,2^(downsample_iteration - 5));
    % shift is 2 time bigger
    shift(1,1) = 2 * shift(1,1);
    shift(1,2) = 2 * shift(1,2);
@@ -89,16 +88,16 @@ for downsample_iteration = 1:5
            % ANDing with exclusionMap
            diffMatrix = diffMatrix & exclusionMap;
            error(2+i,2+j) = sum(sum(diffMatrix));
-           disp(error);
        end
    end
    % get the min error's shift
    [minVal minLoc] = min(error(:));
    shift(1,1) = shift(1,1) + (mod(minLoc - 1,3) - 1); % x shift
    shift(1,2) = shift(1,2) + (floor((minLoc - 1)/3) - 1); % y shift
+   disp('error: ');
+   disp(error);
    disp('shift:');
-   disp(shift(1,1));
-   disp(shift(1,2));
+   disp(shift);
    disp('over');
 end
 end
