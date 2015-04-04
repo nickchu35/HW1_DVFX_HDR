@@ -23,7 +23,7 @@
  img7 = imread('HDR_Photos/img1_7.JPG');
  img8 = imread('HDR_Photos/img1_8.JPG');
  %% Images alignment
- shift = zeros(8,2);
+ shift = zeros(photosNum,2);
  disp('Start Alignment for img4 and img1'); shift(1,:) = align(img4,img1);
  disp('Start Alignment for img4 and img2'); shift(2,:) = align(img4,img2);
  disp('Start Alignment for img4 and img3'); shift(3,:) = align(img4,img3);
@@ -33,7 +33,31 @@
  disp('Start Alignment for img4 and img7'); shift(7,:) = align(img4,img7);
  disp('Start Alignment for img4 and img8'); shift(8,:) = align(img4,img8);
  %% Select sample pixels
- 
+ photosNum = 8;
+ disp('Selecting pixels');
+ file = dir(['HDR_Photos/img1_1.JPG']);
+ shutter = [];
+ for i = 1:photosNum
+    shutter(i) = (2^i)/6400;
+ end
+ B=log(shutter);
+ Wt = [0:1:127 127:-1:0];
+ W = Wt./sum(Wt);
+ pixelNum = 100;
+ pixel=zeros(pixelNum,2);
+ Z={};
+ Z{1}=zeros(pixelNum,photosNum); [100 x 8 double]
+ Z{2}=zeros(pixelNum,photosNum);
+ Z{3}=zeros(pixelNum,photosNum);
+ Z{4}=zeros(pixelNum,photosNum);
+ Z{5}=zeros(pixelNum,photosNum);
+ Z{6}=zeros(pixelNum,photosNum);
+ Z{7}=zeros(pixelNum,photosNum);
+ Z{8}=zeros(pixelNum,photosNum);
+ for i = 1:pixelNum                % select 100 pixels
+     for
+     end
+ end
  
  %% Recover response curve
  
