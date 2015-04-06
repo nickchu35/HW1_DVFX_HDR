@@ -98,7 +98,39 @@
  plot(g{1}, [0:255], 'R', g{2}, [0:255], 'G', g{3}, [0:255], 'B');
  disp('Recovering response curve finished!');
  toc;
- %% Recover HDR image (tone mapping)
+ %% Recover HDR image
+ disp('Recovering the HDR image');
+ tic;
+ LoadFromPrevious = 1;  % directly load from previous or create a new one
+ if LoadFromPrevious
+     disp('Loading from previous EMap.mat');
+     EnergyMap = load('EMap.mat');
+ else
+    EnergyMap = zeros(size(img1,1),size(img1,2),3);
+    for i = 1:size(img1,1)
+         for j = 1:size(img1,2)
+             PixelsCount = i*size(img1,2)+j; % just to make sure it is still running
+             if mod(PixelsCount,1000000) == 0
+                disp(['Pixel count: ', PixelsCount/1000000 , ' million(s)']);
+             end
+             for k = 1:3
+                 t1 = 0;
+                 t2 = 0;
+                 for now = 1:size(file,1)
+                     Z = img{now}(i,j,k)+1;
+                     t1 = t1+W(Z)*(g{k}(Z)-B(now));
+                     t2 = t2+W(Z);
+                 end
+                 EnergyMap(i,j,k) = exp(t1/t2);
+             end
+         end
+    end
+    save('EMap','EnergyMap');
+ end
+ toc;
+ disp('Recovering HDR image finished!');
+ clear img; 
+ %% Tone Mapping
  disp('Tone mapping!!!');
 %  [L,result_G,result_L] = tonemap(g);
  disp('Tone mapping finished......');
