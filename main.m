@@ -15,14 +15,14 @@
 %  end
  %% edge extraction
  dirName='HDR_Photos';
- file = dir([dirName '\\' '*.jpg']);
- img = imread([dirName '\\' file(1).name]);
+ file = dir([dirName '/' '*.jpg']);
+ img = imread([dirName '/' file(1).name]);
  img_E = uint8(zeros(size(img,1),size(img,2)));     % edges bit map
  disp('Edge extraction:');
  img = {};
  tic;
  for k = 1 : size(file,1)                           % 1 to 8 images
-     img{k}= imread([dirName '\\' file(k).name]);
+     img{k}= imread([dirName '/' file(k).name]);
      img_C = edge(rgb2gray(img{k}),'canny');        % find edge
      img_E = img_E | img_C;                         % OR all the edges together
  end
@@ -99,3 +99,6 @@
  disp('Recovering response curve finished!');
  toc;
  %% Recover HDR image (tone mapping)
+ disp('Tone mapping!!!');
+%  [L,result_G,result_L] = tonemap(g);
+ disp('Tone mapping finished......');
