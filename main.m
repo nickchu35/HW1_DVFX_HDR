@@ -104,14 +104,14 @@
  LoadFromPrevious = 1;  % directly load from previous or create a new one
  if LoadFromPrevious
      disp('Loading from previous EMap.mat');
-     EnergyMap = load('EMap.mat');
+     EnergyMap = cell2mat(struct2cell(load('EMap.mat')));
  else
-    EnergyMap = zeros(size(img1,1),size(img1,2),3);
-    for i = 1:size(img1,1)
+     EnergyMap = zeros(size(img1,1),size(img1,2),3);
+     for i = 1:size(img1,1)
          for j = 1:size(img1,2)
              PixelsCount = i*size(img1,2)+j; % just to make sure it is still running
              if mod(PixelsCount,1000000) == 0
-                disp(['Pixel count: ', PixelsCount/1000000 , ' million(s)']);
+                 disp(['Pixel count: ', PixelsCount/1000000 , ' million(s)']);
              end
              for k = 1:3
                  t1 = 0;
@@ -124,13 +124,15 @@
                  EnergyMap(i,j,k) = exp(t1/t2);
              end
          end
-    end
-    save('EMap','EnergyMap');
+     end
+     save('EMap','EnergyMap');
  end
  toc;
  disp('Recovering HDR image finished!');
  clear img; 
  %% Tone Mapping
  disp('Tone mapping!!!');
-%  [L,result_G,result_L] = tonemap(g);
+ tic;
+ [L,result_G,result_L] = tonemap(EnergyMap);
+ toc;
  disp('Tone mapping finished......');

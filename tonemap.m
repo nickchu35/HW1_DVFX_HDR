@@ -5,8 +5,8 @@ level=20;
 phi=8;
 xlon= 0.001;
 %% Tonemapping
-%EnergyMap=exp(EnergyMap);
-Lw=0.2126.*EnergyMap{1}+0.7152.*EnergyMap{2}+0.0722.*EnergyMap{3};
+EnergyMap=exp(EnergyMap);
+Lw=0.2126.*EnergyMap(:,:,1)+0.7152.*EnergyMap(:,:,2)+0.0722.*EnergyMap(:,:,3);
 img_h=size(Lw,1);
 img_w=size(Lw,2);
 tmp=log(Lw+1);
@@ -47,9 +47,9 @@ for i=1:img_h
     end
 end
 result_G=zeros(img_h,img_w,3);
-result_G(:,:,1)=EnergyMap{1}./Lw.*LG;
-result_G(:,:,2)=EnergyMap{2}./Lw.*LG;
-result_G(:,:,3)=EnergyMap{3}./Lw.*LG;
+result_G(:,:,1)=EnergyMap(:,:,1)./Lw.*LG;
+result_G(:,:,2)=EnergyMap(:,:,2)./Lw.*LG;
+result_G(:,:,3)=EnergyMap(:,:,3)./Lw.*LG;
 imwrite(result_G,'result_G.bmp');
 figure, imshow(result_G);
 %% Local
@@ -60,8 +60,8 @@ for i=1:img_h
     end
 end
 result_L=zeros(img_h,img_w,3);
-result_L(:,:,1)=EnergyMap{1}./Lw.*LR;
-result_L(:,:,2)=EnergyMap{2}./Lw.*LR;
-result_L(:,:,3)=EnergyMap{3}./Lw.*LR;
+result_L(:,:,1)=EnergyMap(:,:,1)./Lw.*LR;
+result_L(:,:,2)=EnergyMap(:,:,2)./Lw.*LR;
+result_L(:,:,3)=EnergyMap(:,:,3)./Lw.*LR;
 imwrite(result_L,'result_L.bmp');
 figure, imshow(result_L);
