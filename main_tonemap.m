@@ -1,3 +1,5 @@
+ clear;
+ clc;
 %%  Tone mapping
  disp('Tone mapping!!!');
  disp('Loading EMap.mat......');

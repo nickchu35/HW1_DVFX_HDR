@@ -2,17 +2,6 @@
  clear;
  clc;
  disp('Start the HDR process');
- %% originally want to downsample first from 6000 x 4000 to 1500 x 1000 (1/4), but mind has changed
-%  path = 'HDR_Photos/img2_';
-%  sub = '.JPG';
-%  small_s = '_small';
-%  for i = 1:8
-%      fs = [path int2str(i) sub];
-%      im = imread(fs);
-%      smallim = imresize(im,0.25);
-%      fs = [path int2str(i) small_s sub];
-%      imwrite(smallim, fs);
-%  end
  %% edge extraction
  dirName = 'HDR_Photos';
  file = dir([dirName '/' '*.JPG']);
@@ -28,6 +17,7 @@
  end
  disp('Edge extraction finished!');
  toc;
+ imshow(img_E);
  %% Read in photos
  img1 = imread('HDR_Photos/img1_1.JPG'); 
  img2 = imread('HDR_Photos/img1_2.JPG');
@@ -40,24 +30,28 @@
  %% Images alignment
  photosNum = 8;
  shift = zeros(photosNum,2);
-%  disp('Images aligning......');
-%  tic;
-%  disp('Start Alignment for img4 and img1'); shift(1,:) = align(img4,img1);
-%  disp('Start Alignment for img4 and img2'); shift(2,:) = align(img4,img2);
-%  disp('Start Alignment for img4 and img3'); shift(3,:) = align(img4,img3);
-%  % leave the number 4 empt
-%  disp('Start Alignment for img4 and img5'); shift(5,:) = align(img4,img5);
-%  disp('Start Alignment for img4 and img6'); shift(6,:) = align(img4,img6);
-%  disp('Start Alignment for img4 and img7'); shift(7,:) = align(img4,img7);
-%  disp('Start Alignment for img4 and img8'); shift(8,:) = align(img4,img8);
-%  disp('Images alignment finished......');
-%  toc;
+ disp('Images aligning......');
+ tic;
+ disp('Start Alignment for img4 and img1'); shift(1,:) = align(img4,img1);
+ disp('Start Alignment for img4 and img2'); shift(2,:) = align(img4,img2);
+ disp('Start Alignment for img4 and img3'); shift(3,:) = align(img4,img3);
+ % leave the number 4 empty
+ disp('Start Alignment for img4 and img5'); shift(5,:) = align(img4,img5);
+ disp('Start Alignment for img4 and img6'); shift(6,:) = align(img4,img6);
+ disp('Start Alignment for img4 and img7'); shift(7,:) = align(img4,img7);
+ disp('Start Alignment for img4 and img8'); shift(8,:) = align(img4,img8);
+ disp(shift);
+ shiftimg(img1,shift(1,:));  shiftimg(img2,shift(2,:));  shiftimg(img3,shift(3,:));
+ shiftimg(img5,shift(5,:));  shiftimg(img6,shift(6,:));  shiftimg(img7,shift(7,:));
+ shiftimg(img8,shift(8,:));
+ disp('Images alignment finished......');
+ toc;
  %% set the shutter time
  shutter = [];
  for i = 1:photosNum
     shutter(i) = (2^i)/6400;
  end
- B=log(shutter);
+ B = log(shutter);
  Wt = [0:1:127 127:-1:0];
  W = Wt./sum(Wt);
  %% Select sample pixels
