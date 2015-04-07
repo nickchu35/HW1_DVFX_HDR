@@ -5,7 +5,7 @@ level=20;
 phi=8;
 xlon= 0.001;
 %% Tonemapping
-EnergyMap=exp(EnergyMap);
+% EnergyMap=exp(EnergyMap);
 Lw=0.2126.*EnergyMap(:,:,1)+0.7152.*EnergyMap(:,:,2)+0.0722.*EnergyMap(:,:,3);
 img_h=size(Lw,1);
 img_w=size(Lw,2);

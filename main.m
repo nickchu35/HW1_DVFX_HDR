@@ -101,15 +101,15 @@
  %% Recover HDR image
  disp('Recovering the HDR image');
  tic;
- LoadFromPrevious = 1;  % directly load from previous or create a new one
+ LoadFromPrevious = 0;  % directly load from previous or create a new one
  if LoadFromPrevious
      disp('Loading from previous EMap.mat');
      EnergyMap = cell2mat(struct2cell(load('EMap.mat')));
  else
-     EnergyMap = zeros(size(img1,1),size(img1,2),3);
-     for i = 1:size(img1,1)
-         for j = 1:size(img1,2)
-             PixelsCount = i*size(img1,2)+j; % just to make sure it is still running
+     EnergyMap = zeros(size(img{1},1),size(img{1},2),3);
+     for i = 1:size(img{1},1)
+         for j = 1:size(img{1},2)
+             PixelsCount = i*size(img{1},2)+j; % just to make sure it is still running
              if mod(PixelsCount,1000000) == 0
                  disp(['Pixel count: ', PixelsCount/1000000 , ' million(s)']);
              end
