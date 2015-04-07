@@ -6,15 +6,15 @@ phi=8;
 xlon= 0.001;
 %% Tonemapping
 % EnergyMap=exp(EnergyMap);
-Lw=0.2126.*EnergyMap(:,:,1)+0.7152.*EnergyMap(:,:,2)+0.0722.*EnergyMap(:,:,3);
-img_h=size(Lw,1);
-img_w=size(Lw,2);
-tmp=log(Lw+1);
-avgLw=exp(sum(tmp(:))/(img_h*img_w));
-L=a*Lw./avgLw;
+Lw = 0.2126.*EnergyMap(:,:,1)+0.7152.*EnergyMap(:,:,2)+0.0722.*EnergyMap(:,:,3);
+img_h = size(Lw,1);
+img_w = size(Lw,2);
+tmp = log(Lw+1);
+avgLw = exp(sum(tmp(:))/(img_h*img_w));
+L = a*Lw./avgLw;
 
 blurred={};
-for s=1:level
+for s = 1:level
     H = fspecial('gaussian',31,s-1+eps);
     blurred{s}= imfilter(L,H,'symmetric');
 end

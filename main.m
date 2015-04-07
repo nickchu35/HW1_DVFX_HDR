@@ -14,8 +14,8 @@
 %      imwrite(smallim, fs);
 %  end
  %% edge extraction
- dirName='HDR_Photos';
- file = dir([dirName '/' '*.jpg']);
+ dirName = 'HDR_Photos';
+ file = dir([dirName '/' '*.JPG']);
  img = imread([dirName '/' file(1).name]);
  img_E = uint8(zeros(size(img,1),size(img,2)));     % edges bit map
  disp('Edge extraction:');
@@ -61,7 +61,7 @@
  Wt = [0:1:127 127:-1:0];
  W = Wt./sum(Wt);
  %% Select sample pixels
- pixelNum = 100;
+ pixelNum = 1000;
  pixel = zeros(pixelNum,2);
  tic;
  disp('Selecting pixels');
@@ -101,38 +101,27 @@
  %% Recover HDR image
  disp('Recovering the HDR image');
  tic;
- LoadFromPrevious = 0;  % directly load from previous or create a new one
- if LoadFromPrevious
-     disp('Loading from previous EMap.mat');
-     EnergyMap = cell2mat(struct2cell(load('EMap.mat')));
- else
-     EnergyMap = zeros(size(img{1},1),size(img{1},2),3);
-     for i = 1:size(img{1},1)
-         for j = 1:size(img{1},2)
-             PixelsCount = i*size(img{1},2)+j; % just to make sure it is still running
-             if mod(PixelsCount,1000000) == 0
-                 disp(['Pixel count: ', PixelsCount/1000000 , ' million(s)']);
+ EnergyMap = zeros(size(img1,1),size(img1,2),3);
+ for i = 1:size(img1,1)
+     for j = 1:size(img1,2)
+         PixelsCount = i*size(img1,2)+j; % just to make sure it is still running
+         if mod(PixelsCount,1000000) == 0
+             disp(['Pixel count: ', PixelsCount/1000000 , ' million(s)']);
+         end
+         for k = 1:3
+             t1 = 0;
+             t2 = 0;
+             for now = 1:size(file,1)
+                 Z = img{now}(i,j,k) + 1;
+                 t1 = t1 + W(Z)*(g{k}(Z) - B(now));
+                 t2 = t2 + W(Z);
              end
-             for k = 1:3
-                 t1 = 0;
-                 t2 = 0;
-                 for now = 1:size(file,1)
-                     Z = img{now}(i,j,k)+1;
-                     t1 = t1+W(Z)*(g{k}(Z)-B(now));
-                     t2 = t2+W(Z);
-                 end
-                 EnergyMap(i,j,k) = exp(t1/t2);
-             end
+             EnergyMap(i,j,k) = exp(t1/t2);
          end
      end
-     save('EMap','EnergyMap');
  end
+ save('EMap','EnergyMap');
  toc;
  disp('Recovering HDR image finished!');
  clear img; 
- %% Tone Mapping
- disp('Tone mapping!!!');
- tic;
- [L,result_G,result_L] = tonemap(EnergyMap);
- toc;
- disp('Tone mapping finished......');
+ %% Go to Tone Mapping
