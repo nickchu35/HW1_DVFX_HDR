@@ -5,7 +5,7 @@
  for i = 1:8
      fs = [path int2str(i) sub];
      im = imread(fs);
-     smallim = imresize(im,0.75);
+     smallim = imresize(im,0.1);
      fs = [path2 int2str(i) sub];
      imwrite(smallim, fs);
  end

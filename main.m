@@ -89,6 +89,7 @@
  for i = 1:3
      [g{i},lE{i}] = gsolve(Z{i}, B, 100, W);
  end
+ figure;
  plot(g{1}, [0:255], 'R', g{2}, [0:255], 'G', g{3}, [0:255], 'B');
  disp('Recovering response curve finished!');
  toc;
